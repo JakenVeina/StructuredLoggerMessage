@@ -15,6 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StructuredLoggerMessage.Test", "StructuredLoggerMessage.Test\StructuredLoggerMessage.Test.csproj", "{C55009D5-6C4B-409C-ACDD-91F1B2D4E282}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{39DE3003-EA5E-4597-AAA0-FEE1768C8E63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{D3CFBB2A-8C22-4CFF-A900-F81B2E88CBAF}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\continuous-deployment.yml = .github\workflows\continuous-deployment.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D3CFBB2A-8C22-4CFF-A900-F81B2E88CBAF} = {39DE3003-EA5E-4597-AAA0-FEE1768C8E63}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7898D1B1-F3B9-4071-AF43-EC6E4ED6B592}

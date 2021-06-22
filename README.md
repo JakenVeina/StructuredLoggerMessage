@@ -2,6 +2,8 @@
 # StructuredLoggerMessage
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Continuous Deployment](https://github.com/JakenVeina/StructuredLoggerMessage/workflows/Continuous%20Deployment/badge.svg)](https://github.com/JakenVeina/StructuredLoggerMessage/actions?query=workflow%3A%22Continuous+Deployment%22)
+[![NuGet](https://img.shields.io/nuget/v/StructuredLoggerMessage.svg)](https://www.nuget.org/packages/StructuredLoggerMessage/)
 
 A library for high-performance structural logging, utilizing the [.NET Extensions Logging Framework](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line), and modeled after the [.NET API for high-performance logging](https://docs.microsoft.com/en-us/dotnet/core/extensions/high-performance-logging). The primary difference between the .NET `LoggerMessage` API, and the `StructuralLoggerMessage` API is that it allows for consumers to log data values for use by structural loggers, without requiring that those values be part of the format string used by text loggers.
 

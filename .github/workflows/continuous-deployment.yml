@@ -1,0 +1,25 @@
+name: Continuous Deployment
+
+on:
+    push:
+      branches:
+        - master
+
+jobs:
+  build-and-publish:
+    name: Build And Publish
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET CLI
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - name: Test
+        run: dotnet test
+      - name: Build
+        run: dotnet build StructuredLoggerMessage --configuration Release
+      - name: Publish
+        run: dotnet nuget push StructuredLoggerMessage/bin/Release/*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_AUTH_TOKEN}} --skip-duplicate
