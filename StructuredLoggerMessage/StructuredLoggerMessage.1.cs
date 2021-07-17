@@ -44,6 +44,16 @@ namespace Microsoft.Extensions.Logging.Structured
             };
         }
 
+        /// <summary>
+        ///  Creates a delegate which can be invoked to create a log scope, with attached structural data, and no stringified message.
+        /// </summary>
+        /// <typeparam name="T1">The type of the first data value passed to the logger.</typeparam>
+        /// <param name="name1">The name of the first data value passed to the logger.</param>
+        /// <returns>A delegate which, when invoked, writes the given data to the given <see cref="ILogger"/>.</returns>
+        public static Func<ILogger, T1, IDisposable> DefineScopeData<T1>(string name1)
+            => (logger, value1)
+                => logger.BeginScope(new StructuredLoggerState<T1>(new(name1, value1)));
+
         private struct StructuredLoggerMessageState<T1>
             : IReadOnlyList<KeyValuePair<string, object?>>
         {
@@ -86,6 +96,36 @@ namespace Microsoft.Extensions.Logging.Structured
             private readonly StructuredLoggerMessageFormatter   _formatter;
             private readonly IReadOnlyList<string>              _valueNames;
             private readonly T1                                 _value1;
+        }
+
+        private struct StructuredLoggerState<T1>
+            : IReadOnlyList<KeyValuePair<string, object?>>
+        {
+            public StructuredLoggerState(KeyValuePair<string, T1> pair1)
+                => _pair1 = pair1;
+
+            public KeyValuePair<string, object?> this[int index]
+                => index switch
+                {
+                    0 => new(_pair1.Key, _pair1.Value),
+                    _ => throw new IndexOutOfRangeException()
+                };
+
+            public int Count
+                => 1;
+
+            public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
+            {
+                yield return new(_pair1.Key, _pair1.Value);
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+                => GetEnumerator();
+
+            public override string ToString()
+                => $"{_pair1.Key}: {_pair1.Value}";
+
+            private readonly KeyValuePair<string, T1> _pair1;
         }
     }
 }

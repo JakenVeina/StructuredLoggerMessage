@@ -9,6 +9,9 @@ namespace Microsoft.Extensions.Logging.Structured.Test
         public bool IsEnabled { get; init; }
             = true;
 
+        public List<LoggerDefineScopeInvocation> DefineScopeInvocations { get; }
+            = new();
+
         public List<LoggerLogInvocation> LogInvocations { get; }
             = new();
 
@@ -23,7 +26,17 @@ namespace Microsoft.Extensions.Logging.Structured.Test
             });
 
         IDisposable ILogger.BeginScope<TState>(TState state)
-            => throw new NotSupportedException();
+        {
+            var result = new FakeDisposable();
+
+            DefineScopeInvocations.Add(new()
+            {
+                Result  = result,
+                State   = state
+            });
+
+            return result;
+        }
 
         bool ILogger.IsEnabled(LogLevel logLevel)
             => IsEnabled;

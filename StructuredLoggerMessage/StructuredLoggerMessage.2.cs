@@ -46,6 +46,22 @@ namespace Microsoft.Extensions.Logging.Structured
             };
         }
 
+        /// <summary>
+        ///  Creates a delegate which can be invoked to create a log scope, with attached structural data, and no stringified message.
+        /// </summary>
+        /// <typeparam name="T1">The type of the first data value passed to the logger.</typeparam>
+        /// <typeparam name="T2">The type of the second data value passed to the logger.</typeparam>
+        /// <param name="name1">The name of the first data value passed to the logger.</param>
+        /// <param name="name2">The name of the second data value passed to the logger.</param>
+        /// <returns>A delegate which, when invoked, writes the given data to the given <see cref="ILogger"/>.</returns>
+        public static Func<ILogger, T1, T2, IDisposable> DefineScopeData<T1, T2>(
+                string name1,
+                string name2)
+            => (logger, value1, value2)
+                => logger.BeginScope(new StructuredLoggerState<T1, T2>(
+                    new(name1, value1),
+                    new(name2, value2)));
+
         private struct StructuredLoggerMessageState<T1, T2>
             : IReadOnlyList<KeyValuePair<string, object?>>
         {
@@ -93,6 +109,44 @@ namespace Microsoft.Extensions.Logging.Structured
             private readonly IReadOnlyList<string>              _valueNames;
             private readonly T1                                 _value1;
             private readonly T2                                 _value2;
+        }
+
+        private struct StructuredLoggerState<T1, T2>
+            : IReadOnlyList<KeyValuePair<string, object?>>
+        {
+            public StructuredLoggerState(
+                KeyValuePair<string, T1> pair1,
+                KeyValuePair<string, T2> pair2)
+            {
+                _pair1 = pair1;
+                _pair2 = pair2;
+            }
+
+            public KeyValuePair<string, object?> this[int index]
+                => index switch
+                {
+                    0 => new(_pair1.Key, _pair1.Value),
+                    1 => new(_pair2.Key, _pair2.Value),
+                    _ => throw new IndexOutOfRangeException()
+                };
+
+            public int Count
+                => 2;
+
+            public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
+            {
+                yield return new(_pair1.Key, _pair1.Value);
+                yield return new(_pair2.Key, _pair2.Value);
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+                => GetEnumerator();
+
+            public override string ToString()
+                => $"{_pair1.Key}: {_pair1.Value}, {_pair2.Key}: {_pair2.Value}";
+
+            private readonly KeyValuePair<string, T1> _pair1;
+            private readonly KeyValuePair<string, T2> _pair2;
         }
     }
 }
