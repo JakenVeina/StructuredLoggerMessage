@@ -11,7 +11,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>StructuredLoggerMessage</PackageId>
-    <PackageVersion>1.1.0.0</PackageVersion>
+    <PackageVersion>1.1.1.0</PackageVersion>
     <Authors>Jake Meiergerd</Authors>
     <PackageProjectUrl>https://github.com/JakenVeina/StructuredLoggerMessage</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JakenVeina/StructuredLoggerMessage</RepositoryUrl>
@@ -22,9 +22,9 @@
     <NoPackageAnalysis>false</NoPackageAnalysis>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <IncludeBuildOutput>true</IncludeBuildOutput>
-    <Version>1.1.0</Version>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.1</Version>
+    <AssemblyVersion>1.1.1.0</AssemblyVersion>
+    <FileVersion>1.1.1.0</FileVersion>
   </PropertyGroup>
   
   <ItemGroup>
